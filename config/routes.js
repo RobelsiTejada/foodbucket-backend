@@ -19,5 +19,6 @@ module.exports = require('../lib/wiring/routes')
 .resources('uploads')
 .resources('list')
 .resources('restaurants')
+.get('/yelp', 'yelp#getinfo')
 
 // all routes created
