@@ -17,11 +17,11 @@ const listSchema = new mongoose.Schema({
   },
   _user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'user'
   },
   _restaurants: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Restaurants'
+    ref: 'restaurants'
   }
 }, {
   timestamps: true

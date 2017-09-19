@@ -3,6 +3,10 @@
 const mongoose = require('mongoose')
 
 const restaurantsSchema = new mongoose.Schema({
+  restaurants_id: {
+    type: Number,
+    required: true
+  },
   businesses: [
     {
       rating: {
@@ -118,10 +122,10 @@ const restaurantsSchema = new mongoose.Schema({
   },
   _list: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'List'
+    ref: 'list'
   }
 })
 
-const Restaurant = mongoose.model('Restaurant', restaurantsSchema)
+const Restaurants = mongoose.model('Restaurants', restaurantsSchema)
 
-module.export = Restaurant
+module.export = Restaurants

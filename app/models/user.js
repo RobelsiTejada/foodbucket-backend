@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 }, {
   _list: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'List'
+    ref: 'list'
   }
 }, {
   timestamps: true,
