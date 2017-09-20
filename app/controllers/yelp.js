@@ -9,37 +9,35 @@ const setModel = require('./concerns/set-mongoose-model')
 const yelp = require('yelp-fusion')
 const clientId = 'xlACoXuuSZmb83hJcDxgSg'
 const clientSecret = 'qiH6mwAcjzmzaW1hZ8uvkD9ESq8JWCCUtmBbz3NWs0cbRZRHyFa7J8r0JjT36Gaz'
-const request = require('request')
-
-// gets access token for yelp
 
 yelp.accessToken(clientId, clientSecret).then(response => {
   const client = yelp.client(response.jsonBody.access_token)
 
   client.search({
     term: 'restaurants',
-    location: 'providence, ri'
+    latitude: '41.792875',
+    longitude: '-71.414163',
+    radius: 8047,
+    limit: 10
   }).then(response => {
+    // console.log(response.jsonBody.businesses)
+    console.log(response.jsonBody.businesses[0].id)
     console.log(response.jsonBody.businesses[0].name)
+    console.log(response.jsonBody.businesses[0].image_url)
+    console.log(response.jsonBody.businesses[0].display_phone)
+    console.log(response.jsonBody.businesses[0].display_address)
+    console.log(response.jsonBody.businesses[0].url)
+    console.log(response.jsonBody.businesses[0].is_closed)
   })
-}).catch(e => {
-  console.log(e)
-})
-
-const getinfo = () => {
-  request.get('https://api.yelp.com/v3/businesses/search?term=restaurants&latitude=41.792875&longitude=-71.414163&radius=8047/', {
-    'auth': {
-      'bearer': 'NHG0larijXXaQKiCWF1D7zz_vpxcnFDPMoIz-i1tRcxdx3Af18IVCYYLXfQGes0o_0R-2TiXKv3qHYs981_sNJiE3yjYZJAkDGEuqNKmzBpZuaxeaBnjF_PtQWC9WXYx'
-    }
-  })
-  console.log(request.jsonBody)
-}
+}).catch()
+// (e => {
+//   console.log(e)
+// })
 
 module.exports = controller({
-  getinfo
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show', 'getinfo'] },
+  { method: authenticate, except: ['getinfo'] },
   { method: setModel(Restaurants), only: ['show'] },
   { method: setModel(Restaurants, { forUser: true }), only: ['update', 'destroy'] }
 ] })
