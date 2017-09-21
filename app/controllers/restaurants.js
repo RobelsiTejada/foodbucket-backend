@@ -6,24 +6,6 @@ const Restaurants = models.restaurants
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
-const yelp = require('yelp-fusion')
-const clientId = 'xlACoXuuSZmb83hJcDxgSg'
-const clientSecret = 'qiH6mwAcjzmzaW1hZ8uvkD9ESq8JWCCUtmBbz3NWs0cbRZRHyFa7J8r0JjT36Gaz'
-
-// gets access token for yelp
-
-yelp.accessToken(clientId, clientSecret).then(response => {
-  const client = yelp.client(response.jsonBody.access_token)
-
-  client.search({
-    term: 'restaurants',
-    location: 'providence, ri'
-  }).then(response => {
-    console.log(response.jsonBody.businesses[0].name)
-  })
-}).catch(e => {
-  console.log(e)
-})
 
 const index = (req, res, next) => {
   Restaurants.find()

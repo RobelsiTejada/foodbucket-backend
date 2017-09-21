@@ -40,6 +40,7 @@
     "grunt-jsonlint": "^1.1.0",
     "grunt-mocha-cli": "^3.0.0",
     "grunt-nodemon": "^0.4.2",
+    "json-server": "^0.12.0",
     "load-grunt-config": "^0.19.2",
     "mocha": "^3.3.0",
     "supertest": "^3.0.0",
@@ -48,5 +49,23 @@
   "license": {
     "software": "GNU GPLv3",
     "content": "CC­BY­NC­SA 4.0"
-  }
+  },
+  "description": ":Kyle Pearson :Rob Tejada :Macc Pholsina",
+  "main": "Gruntfile.js",
+  "bin": {
+    "robelsitejada.express-api-team-project": "add-code-block.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobelsiTejada/foodbucket-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/RobelsiTejada/foodbucket-backend/issues"
+  },
+  "homepage": "https://github.com/RobelsiTejada/foodbucket-backend#readme"
 }

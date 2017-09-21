@@ -3,7 +3,9 @@
 const debug = require('debug')('express-api-template:users')
 
 const controller = require('lib/wiring/controller')
+
 const models = require('app/models')
+
 const User = models.user
 
 const crypto = require('crypto')
