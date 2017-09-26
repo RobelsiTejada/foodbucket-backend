@@ -12,14 +12,16 @@
   "dependencies": {
     "aws-sdk": "^2.122.0",
     "bcrypt": "^1.0.2",
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.18.2",
     "cors": "^2.8.3",
     "crypto": "^1.0.1",
     "debug": "^2.6.6",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
+    "express-graphql": "^0.6.11",
     "file-type": "^6.2.0",
     "fs": "0.0.1-security",
+    "graphql-to-json": "^1.1.2",
     "mongoose": "^4.11.12",
     "mongoose-unique-validator": "^1.0.5",
     "morgan": "^1.8.1",
@@ -42,6 +44,8 @@
     "grunt-jsonlint": "^1.1.0",
     "grunt-mocha-cli": "^3.0.0",
     "grunt-nodemon": "^0.4.2",
+    "json-graphql-server": "^1.0.1",
+    "json-server": "^0.12.0",
     "load-grunt-config": "^0.19.2",
     "mocha": "^3.3.0",
     "supertest": "^3.0.0",
@@ -50,5 +54,23 @@
   "license": {
     "software": "GNU GPLv3",
     "content": "CC­BY­NC­SA 4.0"
-  }
+  },
+  "description": ":Kyle Pearson :Rob Tejada :Macc Pholsina",
+  "main": "Gruntfile.js",
+  "bin": {
+    "robelsitejada.express-api-team-project": "add-code-block.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobelsiTejada/foodbucket-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/RobelsiTejada/foodbucket-backend/issues"
+  },
+  "homepage": "https://github.com/RobelsiTejada/foodbucket-backend#readme"
 }
