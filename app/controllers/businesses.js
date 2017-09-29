@@ -14,7 +14,7 @@ const yelp = new Yelp({
   app_secret: 'qiH6mwAcjzmzaW1hZ8uvkD9ESq8JWCCUtmBbz3NWs0cbRZRHyFa7J8r0JjT36Gaz'
 })
 
-const browse = function (req, res, next) {
+const browse = function (req, res, err) {
   // https://www.yelp.com/developers/documentation/v3/business_search
   yelp.search({
     term: 'restaurants',
@@ -22,6 +22,11 @@ const browse = function (req, res, next) {
     longitude: '-71.41283',
     radius: 8047,
     limit: 10
+  })
+  .then(response => {
+    res(null, response.map((businesses) => `{'name': '${response.name}', 'id': '${response.id}'}`))
+    // res.json(response)
+    // console.log(response)
   })
   .then(response => {
     res.json(response)
