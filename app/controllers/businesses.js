@@ -24,9 +24,9 @@ const browse = function (req, res, next) {
     limit: 10
   })
   .then(function (data) {
-    JSON.parse(data)
-    res.json(data)
-    console.log(data)
+    JSON.parse(data.json.businesses)
+    res.json(data.json.businesses)
+    console.log(data.json.businesses)
   })
   .catch(function (err) {
     console.error(err)
