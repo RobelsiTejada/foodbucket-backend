@@ -24,6 +24,7 @@ const browse = function (req, res, next) {
     limit: 10
   })
   .then(function (data) {
+    JSON.parse(data)
     res.json(data)
     console.log(data)
   })
