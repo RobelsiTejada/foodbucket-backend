@@ -55,10 +55,6 @@ class Yelpv3 {
   search (params) {
     return this.get('businesses/search', params)
   }
-
-  business (id) {
-    return this.get(`businesses/${id}`, undefined)
-  }
 }
 
 module.exports = Yelpv3
