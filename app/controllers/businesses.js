@@ -23,10 +23,10 @@ const browse = function (req, res, next) {
     radius: 8047,
     limit: 10
   })
-  .then(function (data) {
-    JSON.stringify(data)
-    res.json(data)
-    console.log(data)
+  .then(response => {
+    JSON.stringify(response.jsonBody.businesses)
+    res.json(response)
+    console.log(response)
   })
   .catch(function (err) {
     console.error(err)
