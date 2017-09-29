@@ -25,13 +25,8 @@ const browse = function () {
     radius: 8047,
     limit: 20})
   .then(function (data) {
-    const show = (req, res) => {
-      res.json({
-        data: req.data.toJSON({ virtuals: true, user: req.user })
-      })
-    }
-    show()
-    console.log(data)
+    JSON.parse(data)
+    // console.log(data)
   })
   .catch(function (err) {
     console.error(err)
