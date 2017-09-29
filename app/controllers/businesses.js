@@ -24,7 +24,7 @@ const browse = function (req, res, next) {
     limit: 10
   })
   .then(response => {
-    response.send()
+    res.send(JSON.parse(response))
     console.log(response)
   })
   .catch(function (err) {
