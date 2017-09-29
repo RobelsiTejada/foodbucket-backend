@@ -24,18 +24,8 @@ const browse = function (req, res, next) {
     limit: 10
   })
   .then(response => {
-    function QueryStringToJSON () {
-      const pairs = response.search.slice(1).split('&')
-      const result = {}
-      pairs.forEach(function (pair) {
-        pair = pair.split('=')
-        result[pair[0]] = decodeURIComponent(pair[1] || '')
-      })
-      return JSON.parse(JSON.stringify(result))
-    }
-    const queryString = QueryStringToJSON()
-    res.json(queryString)
-    console.log(queryString)
+    res.json(response)
+    console.log(response)
   })
   .catch(function (err) {
     console.error(err)
