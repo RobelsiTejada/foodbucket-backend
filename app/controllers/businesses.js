@@ -7,7 +7,7 @@ const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 // const http = require('http')
-// const fs = require('fs')
+const fs = require('fs')
 
 const browse = function () {
   const yelp = require('yelp-fusion')
@@ -24,8 +24,17 @@ const browse = function () {
       radius: 8047,
       limit: 10
     }).then(response => {
-      // JSON.parse(response.jsonBody.businesses)
-      console.log(response.jsonBody)
+      const data = fs.readFileSync('index.html')
+      if (data) {
+        response.send(data.replace('param1Place', 'response'))
+      }
+
+      // const data = response.jsonBody.businesses
+      // // send the html
+      // response.get('/', (req, res) => res.sendFile('index'))
+      // // send json data
+      // response.get('/data', (req, res) => res.json(data))
+
       console.log(response.jsonBody.businesses)
       console.log(response.jsonBody.businesses[0].id)
       console.log(response.jsonBody.businesses[0].name)
