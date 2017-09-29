@@ -23,7 +23,7 @@ const browse = function () {
     latitude: '41.792875',
     longitude: '-71.414163',
     radius: 8047,
-    limit: 20})
+    limit: 10})
   .then(function (data) {
     JSON.parse(data)
     // console.log(data)
