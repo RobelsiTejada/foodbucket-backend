@@ -1,60 +1,127 @@
 'use strict'
 
-const request = require('request-promise')
+const mongoose = require('mongoose')
 
-const baseUrl = 'https://api.yelp.com/v3/'
-
-class Yelpv3 {
-  constructor (opts) {
-    this.appId = opts.app_id
-    this.appSecret = opts.app_secret
-    this.accessToken = ''
-  }
-
-  getAccessToken () {
-    if (this.accessToken) {
-      return Promise.resolve(this.accessToken)
-    } else {
-      return request({
-        method: 'POST',
-        uri: 'https://api.yelp.com/oauth2/token',
-        form: {
-          client_id: this.appId,
-          client_secret: this.appSecret,
-          grant_type: 'client_credentials'
+const businessesSchema = new mongoose.Schema({
+  businesses: [
+    {
+      rating: {
+        type: Number,
+        required: true
+      },
+      price: {
+        type: String,
+        required: true
+      },
+      phone: {
+        type: Number,
+        required: true
+      },
+      id: {
+        type: String,
+        required: true
+      },
+      is_closed: {
+        type: Boolean,
+        required: true
+      },
+      categories: [
+        {
+          alias: {
+            type: String,
+            required: true
+          },
+          title: {
+            type: String,
+            required: true
+          }
         }
-      }).then((response) => {
-        this.accessToken = JSON.parse(response).access_token
-        return this.accessToken
-      })
+      ],
+      review_count: {
+        type: Number,
+        required: true
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      url: {
+        https: {
+          type: String,
+          required: true
+        }
+      },
+      coordinates: {
+        latitude: {
+          type: Number,
+          required: true
+        },
+        longitude: {
+          type: Number,
+          required: true
+        }
+      },
+      image_url: {
+        http: {
+          type: String,
+          required: true
+        }
+      },
+      location: {
+        city: {
+          type: String,
+          required: true
+        },
+        country: {
+          type: String,
+          required: true
+        },
+        address2: {
+          type: String,
+          required: true
+        },
+        address3: {
+          type: String,
+          required: true
+        },
+        state: {
+          type: String,
+          required: true
+        },
+        address1: {
+          type: String,
+          required: true
+        },
+        zip_code: {
+          type: Number,
+          required: true
+        }
+      },
+      distance: {
+        type: Number,
+        required: true
+      },
+      transactions: ['']
     }
+  ],
+  region: {
+    center: {
+      latitude: {
+        type: Number,
+        required: true
+      },
+      longitude: {
+        type: Number,
+        required: true
+      }
+    }
+  },
+  _list: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'list'
   }
+})
 
-  get (resource, params) {
-    params = (typeof params === 'undefined') ? {} : params
+const Businesses = mongoose.model('Businesses', businessesSchema)
 
-    return this.getAccessToken().then((token) => {
-      return request({
-        uri: baseUrl + resource + (params),
-        headers: {
-          'Authorization': 'Bearer ' + token
-        }
-      }).then((response) => {
-        return response
-      }).catch((err) => {
-        // Handles expired access token
-        if (err.statusCode === 401) {
-          this.accessToken = null
-          return this.get(resource, params)
-        }
-        throw err
-      })
-    })
-  }
-
-  search (params) {
-    return this.get('businesses/search', params)
-  }
-}
-
-module.exports = Yelpv3
+module.export = Businesses
