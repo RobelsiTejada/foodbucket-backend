@@ -8,25 +8,23 @@ const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 // const http = require('http')
 // const fs = require('fs')
+const Yelp = require('yelpv3')
+const yelp = new Yelp({
+  app_id: 'xlACoXuuSZmb83hJcDxgSg',
+  app_secret: 'qiH6mwAcjzmzaW1hZ8uvkD9ESq8JWCCUtmBbz3NWs0cbRZRHyFa7J8r0JjT36Gaz'
+})
 
 const browse = function (res, req, next) {
-  const Yelp = require('yelpv3')
-
-  const yelp = new Yelp({
-    app_id: 'xlACoXuuSZmb83hJcDxgSg',
-    app_secret: 'qiH6mwAcjzmzaW1hZ8uvkD9ESq8JWCCUtmBbz3NWs0cbRZRHyFa7J8r0JjT36Gaz'
-  })
-
   // https://www.yelp.com/developers/documentation/v3/business_search
   yelp.search({
     term: 'restaurants',
     latitude: '41.792875',
     longitude: '-71.414163',
     radius: 8047,
-    limit: 10})
+    limit: 1})
   .then(function (data) {
     JSON.parse(data)
-    res.json(data)
+    res.send(data)
     // console.log(data)
   })
   .catch(function (err) {
