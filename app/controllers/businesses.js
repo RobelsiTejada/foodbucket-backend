@@ -25,7 +25,7 @@ const browse = function (res, req, next) {
   //   limit: 1})
   .then(function (data) {
     JSON.parse(data)
-    res.json(data)
+    require('./db.json')
     // console.log(data)
   })
   .catch(function (err) {
