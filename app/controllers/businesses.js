@@ -9,7 +9,7 @@ const setModel = require('./concerns/set-mongoose-model')
 // const http = require('http')
 // const fs = require('fs')
 
-const browse = function () {
+const browse = function (res, req, next) {
   const Yelp = require('yelpv3')
 
   const yelp = new Yelp({
@@ -26,6 +26,7 @@ const browse = function () {
     limit: 10})
   .then(function (data) {
     JSON.parse(data)
+    res.json(data)
     // console.log(data)
   })
   .catch(function (err) {
