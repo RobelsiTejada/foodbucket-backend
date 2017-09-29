@@ -16,12 +16,13 @@ const yelp = new Yelp({
 
 const browse = function (res, req, next) {
   // https://www.yelp.com/developers/documentation/v3/business_search
-  yelp.search({
-    term: 'restaurants',
-    latitude: '41.792875',
-    longitude: '-71.414163',
-    radius: 8047,
-    limit: 1})
+  yelp.search({term: 'food', location: '90210', limit: 10})
+  // ({
+  //   term: 'restaurants',
+  //   latitude: '41.792875',
+  //   longitude: '-71.414163',
+  //   radius: 8047,
+  //   limit: 1})
   .then(function (data) {
     JSON.parse(data)
     res.send(data)
