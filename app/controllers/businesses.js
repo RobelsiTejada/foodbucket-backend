@@ -8,7 +8,7 @@ const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 // const http = require('http')
 // const fs = require('fs')
-const Yelp = require('models.businesses')
+const Yelp = require(models.businesses)
 const yelp = new Yelp({
   app_id: 'xlACoXuuSZmb83hJcDxgSg',
   app_secret: 'qiH6mwAcjzmzaW1hZ8uvkD9ESq8JWCCUtmBbz3NWs0cbRZRHyFa7J8r0JjT36Gaz'
