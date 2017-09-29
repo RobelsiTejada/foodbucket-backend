@@ -24,8 +24,8 @@ const browse = function (req, res, next) {
     limit: 10
   })
   .then(function (data) {
-    // JSON.stringify(data)
-    res(data)
+    JSON.stringify(data)
+    res.json(data)
     console.log(data)
   })
   .catch(function (err) {
