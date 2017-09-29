@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "start": "./bin/express server"
+    "start": "nodemon ./bin/www"
   },
   "engines": {
     "node": "6.11.1",
