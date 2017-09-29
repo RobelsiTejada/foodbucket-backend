@@ -6,7 +6,7 @@ const Restaurants = models.restaurants
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
-// const http = require('http')
+const http = require('http')
 // const fs = require('fs')
 const Yelp = require('yelpv3')
 const yelp = new Yelp({
@@ -24,9 +24,36 @@ const browse = function (res, req, next) {
   //   radius: 8047,
   //   limit: 1})
   .then(function (data) {
-    JSON.parse(data)
-    require('./db.json')
-    // console.log(data)
+    http.createServer((request, response) => {
+      const { headers, method, url } = request
+      let body = []
+      request.on('error', (err) => {
+        console.error(err)
+      }).on('data', (chunk) => {
+        body.push(chunk)
+      }).on('end', () => {
+        body = Buffer.concat(body).toString()
+        // BEGINNING OF NEW STUFF
+
+        response.on('error', (err) => {
+          console.error(err)
+        })
+
+        response.statusCode = 200
+        response.setHeader('Content-Type', 'application/json')
+        // Note: the 2 lines above could be replaced with this next one:
+        // response.writeHead(200, {'Content-Type': 'application/json'})
+
+        const responseBody = { headers, method, url, body }
+
+        response.write(JSON.stringify(responseBody))
+        response.end()
+        // Note: the 2 lines above could be replaced with this next one:
+        // response.end(JSON.stringify(responseBody))
+
+        // END OF NEW STUFF
+      })
+    }).listen(8080)
   })
   .catch(function (err) {
     console.error(err)
