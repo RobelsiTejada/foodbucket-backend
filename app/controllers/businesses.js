@@ -18,8 +18,8 @@ const browse = function (req, res, next) {
   // https://www.yelp.com/developers/documentation/v3/business_search
   yelp.search({
     term: 'restaurants',
-    latitude: '41.792875',
-    longitude: '-71.414163',
+    latitude: '41.82399',
+    longitude: '-71.41283',
     radius: 8047,
     limit: 10
   })
