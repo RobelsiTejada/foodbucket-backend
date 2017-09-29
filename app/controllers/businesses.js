@@ -25,7 +25,7 @@ const browse = function (res, req, next) {
   //   limit: 1})
   .then(function (data) {
     JSON.parse(data)
-    res.send(data)
+    res.json(data)
     // console.log(data)
   })
   .catch(function (err) {
