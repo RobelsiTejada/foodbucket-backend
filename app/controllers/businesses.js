@@ -14,7 +14,7 @@ const yelp = new Yelp({
   app_secret: 'qiH6mwAcjzmzaW1hZ8uvkD9ESq8JWCCUtmBbz3NWs0cbRZRHyFa7J8r0JjT36Gaz'
 })
 
-const browse = function (req, res, err) {
+const browse = function (req, res, next) {
   // https://www.yelp.com/developers/documentation/v3/business_search
   yelp.search({
     term: 'restaurants',
@@ -24,13 +24,18 @@ const browse = function (req, res, err) {
     limit: 10
   })
   .then(response => {
-    res(null, response.map((businesses) => `{'name': '${response.name}', 'id': '${response.id}'}`))
-    // res.json(response)
-    // console.log(response)
-  })
-  .then(response => {
-    res.json(response)
-    console.log(response)
+    function QueryStringToJSON () {
+      const pairs = response.search.slice(1).split('&')
+      const result = {}
+      pairs.forEach(function (pair) {
+        pair = pair.split('=')
+        result[pair[0]] = decodeURIComponent(pair[1] || '')
+      })
+      return JSON.parse(JSON.stringify(result))
+    }
+    const queryString = QueryStringToJSON()
+    res.json(queryString)
+    console.log(queryString)
   })
   .catch(function (err) {
     console.error(err)
