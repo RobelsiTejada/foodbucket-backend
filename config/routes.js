@@ -19,7 +19,7 @@ module.exports = require('../lib/wiring/routes')
 
 // all routes created
 .resources('uploads')
-// .get('/list', 'list#index')
+.get('/list', 'list#index')
 .get('/list', 'list#show')
 .delete('/list', 'list#destroy')
 .patch('/list', 'list#update')
