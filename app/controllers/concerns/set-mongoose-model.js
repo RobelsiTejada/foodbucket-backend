@@ -2,20 +2,20 @@
 
 const HttpError = require('lib/wiring/errors/http-error')
 
-const setMongooseModel = (model, options) =>
+const setMongooseModel = (models, options) =>
   function (req, res, next) {
     const search = { _id: req.params.id }
     if (options && options.forUser) {
       search._owner = req.user
     }
 
-    model.findOne(search, (error, document) => {
+    models.findOne(search, (error, document) => {
       error = error || !document && new HttpError(404)
       if (error) {
         return next(error)
       }
 
-      req[model.modelName.toLowerCase()] = document
+      req[models.modelName.toLowerCase()] = document
       next()
     })
   }
