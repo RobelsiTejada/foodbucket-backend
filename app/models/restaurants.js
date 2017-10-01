@@ -3,10 +3,6 @@
 const mongoose = require('mongoose')
 
 const restaurantsSchema = new mongoose.Schema({
-  restaurants_id: {
-    type: Number,
-    required: true
-  },
   businesses: [
     {
       rating: {

@@ -7,15 +7,6 @@ const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
-const index = (req, res, next) => {
-  Restaurants.find()
-    .then(restaurants => res.json({
-      restaurants: restaurants.map((data) =>
-        data.toJSON({ virtuals: true, user: req.user }))
-    }))
-    .catch(next)
-}
-
 const show = (req, res) => {
   res.json({
     restaurants: req.restaurants.toJSON({ virtuals: true, user: req.user })
@@ -49,14 +40,13 @@ const create = (req, res, next) => {
 }
 
 module.exports = controller({
-  index,
   show,
   update,
   destroy,
   create
 }, { before: [
-  { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show'] },
+  { method: setUser, only: ['show'] },
+  { method: authenticate, except: ['show'] },
   { method: setModel(Restaurants), only: ['show'] },
-  { method: setModel(Restaurants, { forUser: true }), only: ['update', 'destroy'] }
+  { method: setModel(Restaurants, { forUser: true }), only: ['update', 'destroy', 'create'] }
 ] })

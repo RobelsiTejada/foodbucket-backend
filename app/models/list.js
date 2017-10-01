@@ -3,9 +3,9 @@
 const mongoose = require('mongoose')
 
 const listSchema = new mongoose.Schema({
-  user_id: {
-    type: String,
-    required: true
+  restaurants_id: {
+    type: Array,
+    required: false
   },
   _user: {
     type: mongoose.Schema.Types.ObjectId,
