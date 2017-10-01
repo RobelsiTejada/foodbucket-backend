@@ -1,7 +1,7 @@
 'use strict'
 
 const controller = require('lib/wiring/controller')
-const Restaurants = require('../app/models/restaurants.js')
+const Restaurants = require('../models/restaurants.js')
 
 const setModel = require('./concerns/set-mongoose-model')
 
