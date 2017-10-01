@@ -37,7 +37,7 @@ const destroy = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  const list = Object.assign(req.body.List, {
+  const list = Object.assign(req.body.list, {
     _owner: req.user._id
   })
   List.create(list)
