@@ -131,6 +131,8 @@ const restaurantsSchema = new mongoose.Schema({
       return ret
     }
   }
+}, {
+  collection: 'restaurants'
 })
 
 restaurantsSchema.virtual('length').get(function length () {

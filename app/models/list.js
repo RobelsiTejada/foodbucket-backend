@@ -22,6 +22,8 @@ const listSchema = new mongoose.Schema({
       return ret
     }
   }
+}, {
+  collection: 'list'
 })
 
 listSchema.virtual('length').get(function length () {
