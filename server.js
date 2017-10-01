@@ -7,38 +7,6 @@ const express = require('express')
 const app = express()
 const middleware = require('app/middleware')
 
-// // server.js
-// const jsonServer = require('json-server')
-// const jserver = jsonServer.create()
-// const router = jsonServer.router('db.json')
-// const middlewares = jsonServer.defaults()
-//
-// jserver.use(middlewares)
-//
-// jserver.use(jsonServer.bodyParser)
-// jserver.use(function (req, res, next) {
-//   if (req.method === 'POST') {
-//     // Converts POST to GET and move payload to query params
-//     // This way it will make JSON Server that it's GET request
-//     req.method = 'GET'
-//     req.query = req.body
-//   }
-//   // Continue to JSON Server router
-//   next()
-// })
-//
-// // If you need to scope this behaviour to a particular route, use this
-// jserver.post('/businesses', function (req, res, next) {
-//   req.method = 'GET'
-//   req.query = req.body
-//   next()
-// })
-//
-// jserver.use(router)
-// jserver.listen(3000, function () {
-//   console.log('JSON Server is running')
-// })
-
 app.set('root', __dirname)
 
 middleware.before(app)
