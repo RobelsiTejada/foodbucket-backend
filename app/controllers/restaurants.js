@@ -58,6 +58,6 @@ module.exports = controller({
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Restaurants), only: ['show'] },
-  { method: setModel(Restaurants, { forUser: true }), only: ['update', 'destroy'] }
+  { method: setModel(Restaurants), only: ['index', 'show', 'destroy', 'update'] },
+  { method: setModel(Restaurants, { forUser: true }), only: ['create', 'update', 'destroy'] }
 ] })
