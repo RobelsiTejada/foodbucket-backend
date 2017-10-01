@@ -4,20 +4,22 @@ const controller = require('lib/wiring/controller')
 const models = require('app/models')
 const Restaurants = models.restaurants
 
+const authenticate = require('./concerns/authenticate')
+const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   Restaurants.find()
     .then(restaurants => res.json({
       restaurant: restaurants.map((e) =>
-        e.toJSON({ virtuals: true }))
+        e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
 }
 
 const show = (req, res) => {
   res.json({
-    restaurant: req.restaurants.toJSON({ virtuals: true })
+    restaurant: req.restaurants.toJSON({ virtuals: true, user: req.user })
   })
 }
 
@@ -42,7 +44,7 @@ const create = (req, res, next) => {
     .then(restaurants =>
       res.status(201)
         .json({
-          restaurant: restaurants.toJSON({ virtuals: true })
+          restaurant: restaurants.toJSON({ virtuals: true, user: req.user })
         }))
     .catch(next)
 }
@@ -54,6 +56,8 @@ module.exports = controller({
   destroy,
   create
 }, { before: [
+  { method: setUser, only: ['index', 'show'] },
+  { method: authenticate, except: ['index', 'show'] },
   { method: setModel(Restaurants), only: ['index', 'show', 'destroy', 'update'] },
   { method: setModel(Restaurants, { forUser: true }), only: ['create', 'update', 'destroy'] }
 ] })
