@@ -2,7 +2,7 @@
 
 const controller = require('lib/wiring/controller')
 const models = require('app/models')
-const Restaurants = models.restaurant
+const Restaurants = models.restaurants
 
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
@@ -19,32 +19,32 @@ const index = (req, res, next) => {
 
 const show = (req, res) => {
   res.json({
-    example: req.restaurant.toJSON({ virtuals: true, user: req.user })
+    example: req.restaurants.toJSON({ virtuals: true, user: req.user })
   })
 }
 
 const update = (req, res, next) => {
   delete req.body._owner  // disallow owner reassignment.
-  req.restaurant.update(req.body.restaurant)
+  req.restaurants.update(req.body.restaurants)
     .then(() => res.sendStatus(204))
     .catch(next)
 }
 
 const destroy = (req, res, next) => {
-  req.restaurant.remove()
+  req.restaurants.remove()
     .then(() => res.sendStatus(204))
     .catch(next)
 }
 
 const create = (req, res, next) => {
-  const restaurants = Object.assign(req.body.restaurant, {
+  const restaurants = Object.assign(req.body.restaurants, {
     _owner: req.user._id
   })
   Restaurants.create(restaurants)
     .then(restaurant =>
       res.status(201)
         .json({
-          restaurant: restaurant.toJSON({ virtuals: true, user: req.user })
+          restaurant: restaurants.toJSON({ virtuals: true, user: req.user })
         }))
     .catch(next)
 }
