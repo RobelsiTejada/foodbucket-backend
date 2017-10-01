@@ -11,8 +11,7 @@ const listSchema = new mongoose.Schema({
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'user'
   // }
-  },
-  timestamps: true
+  }
 })
 
 listSchema.virtual('length').get(function length () {
