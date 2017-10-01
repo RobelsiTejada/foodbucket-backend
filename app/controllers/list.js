@@ -40,6 +40,6 @@ module.exports = controller({
 }, { before: [
   { method: setUser, only: ['show'] },
   { method: authenticate, except: ['show'] },
-  { method: setModel(List), only: ['show'] },
+  { method: setModel(List), only: ['show', 'update', 'create'] },
   { method: setModel(List, { forUser: true }), only: ['update', 'create'] }
 ] })
