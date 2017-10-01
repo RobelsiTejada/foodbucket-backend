@@ -10,8 +10,8 @@ const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   List.find()
-    .then(examples => res.json({
-      examples: examples.map((e) =>
+    .then(list => res.json({
+      list: list.map((e) =>
         e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
@@ -19,7 +19,7 @@ const index = (req, res, next) => {
 
 const show = (req, res) => {
   res.json({
-    example: req.example.toJSON({ virtuals: true, user: req.user })
+    example: req.list.toJSON({ virtuals: true, user: req.user })
   })
 }
 

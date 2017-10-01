@@ -2,16 +2,16 @@
 
 const controller = require('lib/wiring/controller')
 const models = require('app/models')
-const Restaurant = models.restaurants
+const Restaurants = models.restaurant
 
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
-  Restaurant.find()
-    .then(examples => res.json({
-      examples: examples.map((e) =>
+  Restaurants.find()
+    .then(restaurants => res.json({
+      restaurants: restaurants.map((e) =>
         e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
@@ -19,7 +19,7 @@ const index = (req, res, next) => {
 
 const show = (req, res) => {
   res.json({
-    example: req.example.toJSON({ virtuals: true, user: req.user })
+    example: req.restaurant.toJSON({ virtuals: true, user: req.user })
   })
 }
 
@@ -37,10 +37,10 @@ const destroy = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  const restaurant = Object.assign(req.body.restaurant, {
+  const restaurants = Object.assign(req.body.restaurant, {
     _owner: req.user._id
   })
-  Restaurant.create(restaurant)
+  Restaurants.create(restaurants)
     .then(restaurant =>
       res.status(201)
         .json({
@@ -58,6 +58,6 @@ module.exports = controller({
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Restaurant), only: ['show'] },
-  { method: setModel(Restaurant, { forUser: true }), only: ['update', 'destroy'] }
+  { method: setModel(Restaurants), only: ['show'] },
+  { method: setModel(Restaurants, { forUser: true }), only: ['update', 'destroy'] }
 ] })

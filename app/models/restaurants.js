@@ -115,10 +115,21 @@ const restaurantsSchema = new mongoose.Schema({
         required: true
       }
     }
-  // },
-  // _list: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'list'
+  },
+  _owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
+}, {
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    transform: function (doc, ret, options) {
+      const userId = (options.user && options.user._id) || false
+      ret.editable = userId && userId.equals(doc._owner)
+      return ret
+    }
   }
 })
 
@@ -126,6 +137,6 @@ restaurantsSchema.virtual('length').get(function length () {
   return this.text.length
 })
 
-const Restaurants = mongoose.model('Restaurants', restaurantsSchema)
+const Restaurant = mongoose.model('Restaurants', restaurantsSchema)
 
-module.export = Restaurants
+module.export = Restaurant
