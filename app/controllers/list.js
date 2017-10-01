@@ -1,26 +1,30 @@
 'use strict'
 
 const controller = require('lib/wiring/controller')
-const List = require('../models/list.js')
+const models = require('app/models')
+const List = models.list
 
+const authenticate = require('./concerns/authenticate')
+const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   List.find()
     .then(list => res.json({
       lists: list.map((e) =>
-        e.toJSON())
+        e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
 }
 
 const show = (req, res) => {
   res.json({
-    lists: req.list.toJSON()
+    lists: req.list.toJSON({ virtuals: true, user: req.user })
   })
 }
 
 const update = (req, res, next) => {
+  delete req.body._owner  // disallow owner reassignment.
   req.list.update(req.body.list)
     .then(() => res.sendStatus(204))
     .catch(next)
@@ -33,12 +37,14 @@ const destroy = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  const lists = Object.assign(req.body.list)
+  const lists = Object.assign(req.body.list, {
+    _owner: req.user._id
+  })
   List.create(lists)
   .then(list =>
     res.status(201)
       .json({
-        lists: list.toJSON()
+        lists: list.toJSON({ virtuals: true, user: req.user })
       }))
   .catch(next)
 }
@@ -50,5 +56,8 @@ module.exports = controller({
   destroy,
   create
 }, { before: [
-  { method: setModel(List), only: ['index', 'show', 'create', 'destroy', 'update'] }
+  { method: setUser, only: ['index', 'show'] },
+  { method: authenticate, except: ['index', 'show'] },
+  { method: setModel(List), only: ['index', 'show', 'destroy', 'update'] },
+  { method: setModel(List, { forUser: true }), only: ['create', 'update', 'destroy'] }
 ] })
