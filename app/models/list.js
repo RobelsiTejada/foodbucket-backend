@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 
 const listSchema = new mongoose.Schema({
-  restaurants_id: {
+  restaurants: {
     type: Array,
     required: false
   },
