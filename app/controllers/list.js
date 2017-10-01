@@ -2,20 +2,20 @@
 
 const controller = require('lib/wiring/controller')
 const models = require('app/models')
-const List = models.list
+const List = models.List
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const show = (req, res) => {
   res.json({
-    list: req.list.toJSON({ virtuals: true, user: req.user })
+    list: req.List.toJSON({ virtuals: true, user: req.user })
   })
 }
 
 const update = (req, res, next) => {
   delete req.body._owner  // disallow owner reassignment.
-  req.list.update(req.body.list)
+  req.List.update(req.body.List)
     .then(() => res.sendStatus(204))
     .catch(next)
 }
