@@ -137,6 +137,4 @@ restaurantsSchema.virtual('length').get(function length () {
   return this.text.length
 })
 
-const Restaurants = mongoose.model('Restaurants', restaurantsSchema)
-
-module.export = Restaurants
+module.export = mongoose.model('Restaurants', restaurantsSchema)

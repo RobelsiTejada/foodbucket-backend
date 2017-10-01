@@ -27,6 +27,5 @@ const listSchema = new mongoose.Schema({
 listSchema.virtual('length').get(function length () {
   return this.text.length
 })
-const List = mongoose.model('List', listSchema)
 
-module.export = List
+module.export = mongoose.model('List', listSchema)
