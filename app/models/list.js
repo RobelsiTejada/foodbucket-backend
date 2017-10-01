@@ -6,11 +6,6 @@ const listSchema = new mongoose.Schema({
   restaurants: {
     type: Array,
     required: true
-  },
-  _owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
   }
 }, {
   timestamps: true,

@@ -115,11 +115,6 @@ const restaurantsSchema = new mongoose.Schema({
         required: true
       }
     }
-  },
-  _list: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'List',
-    required: true
   }
 }, {
   timestamps: true,
