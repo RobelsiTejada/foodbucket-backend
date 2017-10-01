@@ -11,7 +11,7 @@ const setModel = require('./concerns/set-mongoose-model')
 const index = (req, res, next) => {
   List.find()
     .then(list => res.json({
-      list: list.map((e) =>
+      lists: list.map((e) =>
         e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
@@ -19,7 +19,7 @@ const index = (req, res, next) => {
 
 const show = (req, res) => {
   res.json({
-    example: req.list.toJSON({ virtuals: true, user: req.user })
+    lists: req.list.toJSON({ virtuals: true, user: req.user })
   })
 }
 
@@ -37,14 +37,14 @@ const destroy = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  const list = Object.assign(req.body.list, {
+  const lists = Object.assign(req.body.list, {
     _owner: req.user._id
   })
-  List.create(list)
+  List.create(lists)
   .then(list =>
     res.status(201)
       .json({
-        list: list.toJSON({ virtuals: true, user: req.user })
+        lists: list.toJSON({ virtuals: true, user: req.user })
       }))
   .catch(next)
 }

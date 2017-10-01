@@ -11,7 +11,7 @@ const setModel = require('./concerns/set-mongoose-model')
 const index = (req, res, next) => {
   Restaurants.find()
     .then(restaurants => res.json({
-      restaurants: restaurants.map((e) =>
+      restaurant: restaurants.map((e) =>
         e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
@@ -19,7 +19,7 @@ const index = (req, res, next) => {
 
 const show = (req, res) => {
   res.json({
-    example: req.restaurants.toJSON({ virtuals: true, user: req.user })
+    restaurant: req.restaurants.toJSON({ virtuals: true, user: req.user })
   })
 }
 
@@ -37,11 +37,11 @@ const destroy = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  const restaurants = Object.assign(req.body.restaurants, {
+  const restaurantsA = Object.assign(req.body.restaurants, {
     _owner: req.user._id
   })
-  Restaurants.create(restaurants)
-    .then(restaurant =>
+  Restaurants.create(restaurantsA)
+    .then(restaurants =>
       res.status(201)
         .json({
           restaurant: restaurants.toJSON({ virtuals: true, user: req.user })
