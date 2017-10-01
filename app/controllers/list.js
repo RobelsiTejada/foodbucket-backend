@@ -1,8 +1,8 @@
 'use strict'
 
 const controller = require('lib/wiring/controller')
-const models = require('app/models')
-const List = models.list
+// const models = require('app/models')
+const List = ('../models/list')
 
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
