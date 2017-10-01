@@ -9,6 +9,7 @@ const errorHandler = (err, req, res, next) => {
       message: err.message
     }
   }
+  console.log(err)
 
   // include stacktrace
   if (req.app.get('env') === 'development') {

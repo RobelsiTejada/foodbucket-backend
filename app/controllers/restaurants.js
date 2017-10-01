@@ -11,7 +11,7 @@ const setModel = require('./concerns/set-mongoose-model')
 const index = (req, res, next) => {
   Restaurants.find()
     .then(restaurant => res.json({
-      restaurant: restaurant.map((e) =>
+      restaurants: restaurant.map((e) =>
         e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
