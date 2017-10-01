@@ -10,7 +10,7 @@ const setMongooseModel = (model, options) =>
     }
 
     model.findOne(search, (error, document) => {
-      error = error || !document && new HttpError(404)
+      (error = error || !document) && new HttpError(404)
       if (error) {
         return next(error)
       }

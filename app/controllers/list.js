@@ -20,12 +20,26 @@ const update = (req, res, next) => {
     .catch(next)
 }
 
+const create = (req, res, next) => {
+  const list = Object.assign(req.body.List, {
+    _owner: req.user._id
+  })
+  List.create(list)
+  .then(list =>
+    res.status(201)
+      .json({
+        list: list.toJSON({ virtuals: true, user: req.user })
+      }))
+  .catch(next)
+}
+
 module.exports = controller({
   show,
-  update
+  update,
+  create
 }, { before: [
   { method: setUser, only: ['show'] },
   { method: authenticate, except: ['show'] },
   { method: setModel(List), only: ['show'] },
-  { method: setModel(List, { forUser: true }), only: ['update'] }
+  { method: setModel(List, { forUser: true }), only: ['update', 'create'] }
 ] })
