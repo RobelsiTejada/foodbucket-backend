@@ -6,6 +6,7 @@ const Restaurants = models.restaurants
 
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
+const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   Restaurants.find()
@@ -56,5 +57,7 @@ module.exports = controller({
   create
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show'] }
+  { method: authenticate, except: ['index', 'show'] },
+  { method: setModel(Restaurants), only: ['index', 'show', 'destroy', 'update'] },
+  { method: setModel(Restaurants, { forUser: true }), only: ['create', 'update', 'destroy'] }
 ] })
