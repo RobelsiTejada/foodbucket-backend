@@ -28,6 +28,6 @@ listSchema.virtual('length').get(function length () {
   return this.restaurants.length
 })
 
-const List = mongoose.model('List', listSchema)
+const List = mongoose.model('Lists', listSchema)
 
 module.export = List
