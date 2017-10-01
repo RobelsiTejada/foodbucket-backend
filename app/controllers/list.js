@@ -9,18 +9,15 @@ const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
-  List.find()
-    .then(lists => res.json({
-      lists: lists.map((e) =>
-        e.toJSON({ virtuals: true, user: req.user }))
-    }))
+  List.find({})
+    .then(list => res.json({ list }))
     .catch(next)
 }
 
-const show = (req, res) => {
-  res.json({
-    list: req.list.toJSON({ virtuals: true, user: req.user })
-  })
+const show = (req, res, next) => {
+  List.findById(req.params.id)
+    .then(list => list ? res.json({ list }) : next())
+    .catch(next)
 }
 
 const update = (req, res, next) => {
