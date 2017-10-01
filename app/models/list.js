@@ -22,12 +22,10 @@ const listSchema = new mongoose.Schema({
       return ret
     }
   }
-}, {
-  collection: 'list'
 })
 
 listSchema.virtual('length').get(function length () {
   return this.text.length
 })
 
-module.export = mongoose.model('List', listSchema)
+module.export = mongoose.model('list', listSchema)
