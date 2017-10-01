@@ -9,9 +9,9 @@ const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
-  Restaurants.find({})
-    .then(restaurants => res.json({
-      restaurant: restaurants.map((e) =>
+  Restaurants.find()
+    .then(restaurant => res.json({
+      restaurant: restaurant.map((e) =>
         e.toJSON({ virtuals: true, user: req.user }))
     }))
     .catch(next)
@@ -19,8 +19,21 @@ const index = (req, res, next) => {
 
 const show = (req, res) => {
   res.json({
-    restaurant: req.restaurants.toJSON({ virtuals: true, user: req.user })
+    restaurants: req.restaurants.toJSON({ virtuals: true, user: req.user })
   })
+}
+
+const create = (req, res, next) => {
+  const restaurants = Object.assign(req.body.restaurants, {
+    _owner: req.user._id
+  })
+  Restaurants.create(restaurants)
+    .then(restaurants =>
+      res.status(201)
+        .json({
+          restaurants: restaurants.toJSON({ virtuals: true, user: req.user })
+        }))
+    .catch(next)
 }
 
 const update = (req, res, next) => {
@@ -36,28 +49,15 @@ const destroy = (req, res, next) => {
     .catch(next)
 }
 
-const create = (req, res, next) => {
-  const restaurantsA = Object.assign(req.body.restaurants, {
-    _owner: req.user._id
-  })
-  Restaurants.create(restaurantsA)
-    .then(restaurants =>
-      res.status(201)
-        .json({
-          restaurant: restaurants.toJSON({ virtuals: true, user: req.user })
-        }))
-    .catch(next)
-}
-
 module.exports = controller({
   index,
   show,
+  create,
   update,
-  destroy,
-  create
+  destroy
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Restaurants), only: ['index', 'show', 'destroy', 'update'] },
-  { method: setModel(Restaurants, { forUser: true }), only: ['create', 'update', 'destroy'] }
+  { method: setModel(Restaurants), only: ['show'] },
+  { method: setModel(Restaurants, { forUser: true }), only: ['update', 'destroy'] }
 ] })
