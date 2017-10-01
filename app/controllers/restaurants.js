@@ -9,16 +9,18 @@ const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
-  console.log(res)
   Restaurant.find()
-    .then(restaurants => res.json({ restaurants }))
+    .then(examples => res.json({
+      examples: examples.map((e) =>
+        e.toJSON({ virtuals: true, user: req.user }))
+    }))
     .catch(next)
 }
 
-const show = (req, res, next) => {
-  Restaurant.findById(req.params.id)
-    .then(restaurant => restaurant ? res.json({ restaurant }) : next())
-    .catch(next)
+const show = (req, res) => {
+  res.json({
+    example: req.example.toJSON({ virtuals: true, user: req.user })
+  })
 }
 
 const update = (req, res, next) => {
