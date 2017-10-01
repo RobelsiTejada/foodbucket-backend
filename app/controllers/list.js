@@ -10,14 +10,14 @@ const index = (req, res, next) => {
   List.find()
     .then(list => res.json({
       lists: list.map((e) =>
-        e.toJSON({ virtuals: true }))
+        e.toJSON())
     }))
     .catch(next)
 }
 
 const show = (req, res) => {
   res.json({
-    lists: req.list.toJSON({ virtuals: true })
+    lists: req.list.toJSON()
   })
 }
 
@@ -42,7 +42,7 @@ const create = (req, res, next) => {
   .then(list =>
     res.status(201)
       .json({
-        lists: list.toJSON({ virtuals: true })
+        lists: list.toJSON()
       }))
   .catch(next)
 }
@@ -54,5 +54,5 @@ module.exports = controller({
   destroy,
   create
 }, { before: [
-  { method: setModel(List), only: ['index', 'show', 'destroy', 'update'] }
+  { method: setModel(List), only: ['index', 'show', 'create', 'destroy', 'update'] }
 ] })

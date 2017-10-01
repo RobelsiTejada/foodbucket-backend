@@ -10,14 +10,14 @@ const index = (req, res, next) => {
   Restaurants.find()
     .then(restaurants => res.json({
       restaurant: restaurants.map((e) =>
-        e.toJSON({ virtuals: true }))
+        e.toJSON())
     }))
     .catch(next)
 }
 
 const show = (req, res) => {
   res.json({
-    restaurant: req.restaurants.toJSON({ virtuals: true })
+    restaurant: req.restaurants.toJSON()
   })
 }
 
@@ -42,7 +42,7 @@ const create = (req, res, next) => {
     .then(restaurants =>
       res.status(201)
         .json({
-          restaurant: restaurants.toJSON({ virtuals: true })
+          restaurant: restaurants.toJSON()
         }))
     .catch(next)
 }
@@ -54,5 +54,5 @@ module.exports = controller({
   destroy,
   create
 }, { before: [
-  { method: setModel(Restaurants), only: ['index', 'show', 'destroy', 'update'] }
+  { method: setModel(Restaurants), only: ['index', 'show', 'destroy', 'create', 'update'] }
 ] })
