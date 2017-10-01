@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-curl \
--X GET \
--H "Authorization: Bearer NHG0larijXXaQKiCWF1D7zz_vpxcnFDPMoIz-i1tRcxdx3Af18IVCYYLXfQGes0o_0R-2TiXKv3qHYs981_sNJiE3yjYZJAkDGEuqNKmzBpZuaxeaBnjF_PtQWC9WXYx" \
-"https://api.yelp.com/v3/businesses/"${ID}""
+# API="http://localhost:4741"
+API="${API_ORIGIN:-https://foodbucket.herokuapp.com}"
+URL_PATH="/restaurants"
 
+curl "${API}${URL_PATH}" \
+  --include \
+  --request POST \
+  --header "Content-Type: application/json" \
+  --data
 
 echo

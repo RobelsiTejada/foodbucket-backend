@@ -23,7 +23,7 @@ app.use(middleware['404'])
 // error handlers
 app.use(middleware['error-handler'])
 
-const debug = require('debug')('express-api-team-project:server')
+const debug = require('debug')('express-api-template:server')
 const http = require('http')
 
 /**
@@ -71,11 +71,11 @@ const onError = (error) => {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges')
       process.exit(1)
-    //  break
+      break
     case 'EADDRINUSE':
       console.error(bind + ' is already in use')
       process.exit(1)
-    //  break
+      break
     default:
       throw error
   }
