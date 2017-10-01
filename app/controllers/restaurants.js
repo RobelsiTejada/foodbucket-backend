@@ -2,14 +2,14 @@
 
 const controller = require('lib/wiring/controller')
 const models = require('app/models')
-const Restaurants = models.restaurants
+const Restaurant = models.restaurants
 
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
-  Restaurants.find()
+  Restaurant.find()
     .then(restaurants => res.json({
       restaurants: restaurants.map((e) =>
         e.toJSON({ virtuals: true, user: req.user }))
@@ -19,32 +19,32 @@ const index = (req, res, next) => {
 
 const show = (req, res) => {
   res.json({
-    restaurants: req.restaurants.toJSON({ virtuals: true, user: req.user })
+    restaurant: req.restaurant.toJSON({ virtuals: true, user: req.user })
   })
 }
 
 const update = (req, res, next) => {
   delete req.body._owner  // disallow owner reassignment.
-  req.restaurants.update(req.body.restaurants)
+  req.restaurant.update(req.body.restaurant)
     .then(() => res.sendStatus(204))
     .catch(next)
 }
 
 const destroy = (req, res, next) => {
-  req.restaurants.remove()
+  req.restaurant.remove()
     .then(() => res.sendStatus(204))
     .catch(next)
 }
 
 const create = (req, res, next) => {
-  const restaurants = Object.assign(req.body.restaurants, {
+  const restaurant = Object.assign(req.body.restaurant, {
     _owner: req.user._id
   })
-  Restaurants.create(restaurants)
-    .then(restaurants =>
+  Restaurant.create(restaurant)
+    .then(restaurant =>
       res.status(201)
         .json({
-          restaurants: restaurants.toJSON({ virtuals: true, user: req.user })
+          restaurant: restaurant.toJSON({ virtuals: true, user: req.user })
         }))
     .catch(next)
 }
@@ -58,6 +58,6 @@ module.exports = controller({
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Restaurants), only: ['show'] },
-  { method: setModel(Restaurants, { forUser: true }), only: ['update', 'destroy'] }
+  { method: setModel(Restaurant), only: ['show'] },
+  { method: setModel(Restaurant, { forUser: true }), only: ['update', 'destroy'] }
 ] })
