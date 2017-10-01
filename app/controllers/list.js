@@ -7,11 +7,11 @@ const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
-const index = (req, res, next) => {
-  List.find({})
-    .then(list => res.json({ list }))
-    .catch(next)
-}
+// const index = (req, res, next) => {
+//   List.find({})
+//     .then(list => res.json({ list }))
+//     .catch(next)
+// }
 
 const show = (req, res) => {
   res.json({
@@ -27,7 +27,7 @@ const update = (req, res, next) => {
 }
 
 module.exports = controller({
-  index,
+  // index,
   show,
   update
 }, { before: [
