@@ -41,5 +41,5 @@ module.exports = controller({
   { method: setUser, only: ['show'] },
   { method: authenticate, except: ['show'] },
   { method: setModel(List), only: ['show', 'update', 'create'] },
-  { method: setModel(List, { forUser: true }), only: ['update', 'create'] }
+  { method: setModel(List, { forUser: true }), only: ['show'] }
 ] })
