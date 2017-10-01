@@ -122,11 +122,19 @@ const restaurantsSchema = new mongoose.Schema({
     required: true
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    transform: function (doc, ret, options) {
+      const userId = (options.user && options.user._id) || false
+      ret.editable = userId && userId.equals(doc._owner)
+      return ret
+    }
+  }
 })
 
 restaurantsSchema.virtual('length').get(function length () {
-  return this.text.length
+  return this.businesses.length
 })
 
 const Restaurants = mongoose.model('Restaurants', restaurantsSchema)
