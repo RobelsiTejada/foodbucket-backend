@@ -21,7 +21,6 @@ const show = (req, res) => {
 }
 
 const update = (req, res, next) => {
-  delete req.body._owner  // disallow owner reassignment.
   req.list.update(req.body.list)
     .then(() => res.sendStatus(204))
     .catch(next)
@@ -34,9 +33,7 @@ const destroy = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  const lists = Object.assign(req.body.list, {
-    _owner: req.user._id
-  })
+  const lists = Object.assign(req.body.list)
   List.create(lists)
   .then(list =>
     res.status(201)
