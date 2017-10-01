@@ -10,10 +10,7 @@ const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   List.find({})
-    .then(list => res.json({
-      list: list.map((e) =>
-        e.toJSON({ virtuals: true, user: req.user }))
-    }))
+    .then(list => res.json({ list }))
     .catch(next)
 }
 
