@@ -116,9 +116,9 @@ const restaurantsSchema = new mongoose.Schema({
       }
     }
   },
-  _owner: {
+  _list: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'List',
     required: true
   }
 }, {
