@@ -9,7 +9,7 @@ const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
-  List.findOne()
+  List.find()
     .then(list => res.json({ list }))
     .catch(next)
 }
