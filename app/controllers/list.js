@@ -4,22 +4,20 @@ const controller = require('lib/wiring/controller')
 const models = require('app/models')
 const List = models.list
 
-const authenticate = require('./concerns/authenticate')
-const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   List.find()
     .then(list => res.json({
       lists: list.map((e) =>
-        e.toJSON({ virtuals: true, user: req.user }))
+        e.toJSON({ virtuals: true }))
     }))
     .catch(next)
 }
 
 const show = (req, res) => {
   res.json({
-    lists: req.list.toJSON({ virtuals: true, user: req.user })
+    lists: req.list.toJSON({ virtuals: true })
   })
 }
 
@@ -44,7 +42,7 @@ const create = (req, res, next) => {
   .then(list =>
     res.status(201)
       .json({
-        lists: list.toJSON({ virtuals: true, user: req.user })
+        lists: list.toJSON({ virtuals: true })
       }))
   .catch(next)
 }
@@ -56,8 +54,5 @@ module.exports = controller({
   destroy,
   create
 }, { before: [
-  { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(List), only: ['index', 'show', 'destroy', 'update'] },
-  { method: setModel(List, { forUser: true }), only: ['create', 'update', 'destroy'] }
+  { method: setModel(List), only: ['index', 'show', 'destroy', 'update'] }
 ] })
