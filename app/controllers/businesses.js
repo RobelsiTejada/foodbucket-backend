@@ -6,8 +6,7 @@ const Businesses = models.businesses
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
-// const http = require('http')
-// const fs = require('fs')
+
 const Yelp = require('yelpv3')
 const yelp = new Yelp({
   app_id: 'xlACoXuuSZmb83hJcDxgSg',
@@ -25,10 +24,9 @@ const browse = function (req, res, next) {
   })
   .then(response => {
     res.send(JSON.parse(response))
-    console.log(response)
   })
   .catch(function (err) {
-    console.error(err)
+    res.send(JSON.parse(err))
   })
 }
 
