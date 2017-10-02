@@ -116,9 +116,9 @@ const businessesSchema = new mongoose.Schema({
       }
     }
   },
-  _list: {
+  _restaurants: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'list'
+    ref: 'Restaurants'
   }
 })
 
